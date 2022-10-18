@@ -12,12 +12,12 @@ p0 = 5 # Definindo p0 [N]
 T0 = 2 # e o período [s]
 w_ = 2*math.pi/T0 # frequência de excitação [rad/s]
 
-# settings do tempo [s]
-tmax = 10 
-step = 0.1
+# settings do tempo [s] 
+step = 0.01
+tmax = 10+step
 
 # Número de termos considerados na série de Fourier
-n_therms = 5
+n_therms = 100
 
 # Criando listas dentro dos intervalos
 n = np.arange(1,n_therms)
@@ -43,7 +43,7 @@ for time in t:
 plt.figure(1)
 plt.plot(t,PT)
 plt.grid()
-plt.title('Série de Fourier para o Carregamento Especificado')
+plt.title('Série de Fourier')
 plt.xlabel('tempo [s]')
 plt.ylabel('p(t) [N]')
 plt.show()
