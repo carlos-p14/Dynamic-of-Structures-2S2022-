@@ -60,3 +60,37 @@ P2(1,1) = P02
 Dbl Urec2 = Duhamel_Rectangle(P2, M2, W2, Xi2, dt2) // por integrao numerica de retangulos
 Dbl Utrap2 = Duhamel_Trapeze(P2, M2, W2, Xi2, dt2) // de trapezeios
 Dbl Usimp2 = Duhamel_Simpson(P2, M2, W2, Xi2, dt2) // por Simpson
+
+// Exercicio 4 - 8.7
+// Dados
+Dbl M5 = 500000 // Massa [kg]
+Dbl F5 = 1/M5 // Inverso da massa
+Dbl K5 = 300000*10^3 // Rigidez [N/m]
+Dbl Xi5 = 0.02 // Taxa de Amortecimento [%]
+Dbl dt5 = 0.05 // Intervalo de tempo da funcao carregamento
+Dbl N5 = 128 // Numero de passos
+Dbl W5 = Sqrt[K5/M5] // Frequencia Natural [rad/s]
+Dbl gama5 = dt5*N5 // Tempo de observacao [s]
+
+//matriz do carregamento:
+
+Dbl P5 =[0.00 0.00
+	 0.05 1545084.97
+	 0.10 2938925.26
+	 0.15 4045084.97
+	 0.20 4755282.58
+	 0.25 5000000.00
+	 0.30 4755282.58
+	 0.35 4045084.97
+	 0.40 2938925.26
+	 0.45 1545084.97
+	 0.50 0
+	 gama5 0]
+
+//Resolucao:
+
+Dbl qF = Resample(P5,N5,dt5) // Reordena q para cada intervalo de tempo dt
+Dbl FFTP = FFT_Real(qF,dt5) // Retorna a Transformada Rapida de Fourier de um sinal real
+Dbl FH = FSolve(FFTP,W5,Xi5,F5,dt5) // Retorna o produto da funcao da forca no dominio de frequencia pela funcao de resposta no dominio da frequencia
+Dbl U5 = iFFT_Real(FH,dt5) // Retorna a Inversa da Transformada Rapida de Fourier de um sinal complexo
+	
